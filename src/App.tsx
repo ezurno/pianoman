@@ -51,9 +51,10 @@ export default function App() {
   }));
 
   const onClickNote = (event: React.MouseEvent<HTMLDivElement>) => {
-    const audio = new Audio(
-      `public/piano/FX_piano_${event.currentTarget.id}.mp3`
-    );
+    const audio =
+      import.meta.env.MODE === "production"
+        ? new Audio(`/pianoman/piano/FX_piano_${event.currentTarget.id}.mp3`)
+        : new Audio(`public/piano/FX_piano_${event.currentTarget.id}.mp3`);
     audio.play();
   };
 
@@ -62,7 +63,10 @@ export default function App() {
       ...prevState,
       [id]: true,
     }));
-    const audio = new Audio(`public/piano/FX_piano_${id}.mp3`);
+    const audio =
+      import.meta.env.MODE === "production"
+        ? new Audio(`/pianoman/piano/FX_piano_${id}.mp3`)
+        : new Audio(`public/piano/FX_piano_${id}.mp3`);
     audio.play();
   };
 
