@@ -1,7 +1,12 @@
 import { useEffect, useState } from "react";
 import { FaGithub } from "react-icons/fa";
+import { IoIosSettings, IoMdInformationCircle } from "react-icons/io";
+import { useInfoStore, useSettingStore } from "./utils/store";
+import Settings from "./components/Settings";
+import Info from "./components/Info";
+import { findValue } from "./utils/findValue";
 
-interface IPianoProps {
+export interface IPianoProps {
   do: boolean;
   do_s: boolean;
   le: boolean;
@@ -16,22 +21,6 @@ interface IPianoProps {
   si: boolean;
   do_h: boolean;
 }
-
-const keyNoteMap: { [key: string]: string } = {
-  a: "do",
-  w: "do_s",
-  s: "le",
-  e: "le_s",
-  d: "mi",
-  f: "pa",
-  t: "pa_s",
-  g: "sol",
-  y: "sol_s",
-  h: "la",
-  u: "la_s",
-  j: "si",
-  k: "do_h",
-};
 
 export default function App() {
   const [isPress, setIsPress] = useState<IPianoProps>({
@@ -49,6 +38,17 @@ export default function App() {
     si: false,
     do_h: false,
   });
+  const { keyNoteMap, isTab, setIsTab } = useSettingStore((state) => ({
+    keyNoteMap: state.keyNoteMap,
+    isTab: state.isTab,
+    setIsTab: state.setIsTab,
+    updateKeyNote: state.updateKeyNote,
+  }));
+
+  const { isInfoTab, setIsInfoTab } = useInfoStore((state) => ({
+    isInfoTab: state.isInfoTab,
+    setIsInfoTab: state.setIsInfoTab,
+  }));
 
   const onClickNote = (event: React.MouseEvent<HTMLDivElement>) => {
     const audio = new Audio(
@@ -74,14 +74,14 @@ export default function App() {
   };
 
   const handleKeyUp = (event: KeyboardEvent) => {
-    const note = keyNoteMap[event.key.toLowerCase()];
+    const note = findValue(keyNoteMap, event.key.toLowerCase());
     if (note) {
       onUnPressNote(note);
     }
   };
 
   const handleKeyPress = (event: KeyboardEvent) => {
-    const note = keyNoteMap[event.key.toLowerCase()];
+    const note = findValue(keyNoteMap, event.key.toLowerCase());
     if (note) {
       onPressNote(note);
     }
@@ -95,12 +95,24 @@ export default function App() {
       window.removeEventListener("keydown", handleKeyPress);
       window.removeEventListener("keyup", handleKeyUp);
     };
-  }, []);
+  }, [isTab]);
 
   return (
-    <div className="font-shadows h-lvh flex flex-col justify-around items-center">
+    <div className="font-shadows h-lvh flex flex-col justify-around items-center z-10 relative">
+      {isTab && <Settings />}
+      {isInfoTab && <Info />}
       <h1 className="font-bold text-5xl">PIANO MAN</h1>
-      <div className="h-72 bg-black rounded-3xl py-8 w-3/5 flex flex-row justify-center">
+      <div className="h-72 bg-black rounded-3xl py-8 w-3/5 flex flex-row justify-center relative">
+        <div className="absolute flex flex-row gap-4 -top-10 right-8 text-2xl">
+          <IoMdInformationCircle
+            onClick={setIsInfoTab}
+            className="hover:cursor-pointer"
+          />
+          <IoIosSettings
+            onClick={setIsTab}
+            className="hover:cursor-pointer hover:animate-spin"
+          />
+        </div>
         <div className="relative w-1/12 h-full">
           <div
             id="do"
@@ -210,8 +222,10 @@ export default function App() {
         </div>
       </div>
       <div className="text-slate-700 flex flex-col justify-center items-center gap-4">
-        <p>create by @ezurno</p>
-        <FaGithub className="hover:text-slate-400 cursor-pointer duration-300" />
+        <p>2024 create by @ezurno v1.0.0</p>
+        <a href="https://github.com/ezurno/pianoman">
+          <FaGithub className="hover:text-slate-400 cursor-pointer duration-300" />
+        </a>
       </div>
     </div>
   );
