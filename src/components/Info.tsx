@@ -2,7 +2,7 @@ import { IoIosClose } from "react-icons/io";
 import { useInfoStore } from "../utils/store";
 
 export default function Info() {
-  const { isInfoTab, setIsInfoTab } = useInfoStore((state) => ({
+  const { setIsInfoTab } = useInfoStore((state) => ({
     isInfoTab: state.isInfoTab,
     setIsInfoTab: state.setIsInfoTab,
   }));

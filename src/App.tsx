@@ -52,7 +52,7 @@ export default function App() {
 
   const onClickNote = (event: React.MouseEvent<HTMLDivElement>) => {
     const audio = new Audio(
-      `src/assets/piano/FX_piano_${event.currentTarget.id}.mp3`
+      `public/piano/FX_piano_${event.currentTarget.id}.mp3`
     );
     audio.play();
   };
@@ -62,7 +62,7 @@ export default function App() {
       ...prevState,
       [id]: true,
     }));
-    const audio = new Audio(`src/assets/piano/FX_piano_${id}.mp3`);
+    const audio = new Audio(`public/piano/FX_piano_${id}.mp3`);
     audio.play();
   };
 
