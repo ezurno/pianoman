@@ -106,8 +106,8 @@ export default function App() {
             id="do"
             onClick={onClickNote}
             className={`${
-              isPress?.do && "bg-slate-300"
-            } h-full bg-slate-50 border-black border-2 rounded-b-xl`}
+              isPress?.do ? "bg-slate-300" : "bg-slate-50"
+            } h-full border-black border-2 rounded-b-xl`}
           />
           <div
             id="do_s"
@@ -122,8 +122,8 @@ export default function App() {
             id="le"
             onClick={onClickNote}
             className={`${
-              isPress?.le && "bg-slate-300"
-            } h-full bg-slate-50 border-black border-2 rounded-b-xl`}
+              isPress?.le ? "bg-slate-300" : "bg-slate-50"
+            } h-full border-black border-2 rounded-b-xl`}
           />
           <div
             id="le_s"
@@ -138,8 +138,8 @@ export default function App() {
             id="mi"
             onClick={onClickNote}
             className={`${
-              isPress?.mi && "bg-slate-300"
-            } h-full bg-slate-50 border-black border-2 rounded-b-xl`}
+              isPress?.mi ? "bg-slate-300" : "bg-slate-50"
+            } h-full border-black border-2 rounded-b-xl`}
           />
         </div>
         <div className="relative w-1/12 h-full">
@@ -147,8 +147,8 @@ export default function App() {
             id="pa"
             onClick={onClickNote}
             className={`${
-              isPress?.pa && "bg-slate-300"
-            } h-full bg-slate-50 border-black border-2 rounded-b-xl`}
+              isPress?.pa ? "bg-slate-300" : "bg-slate-50"
+            } h-full border-black border-2 rounded-b-xl`}
           />
           <div
             id="pa_s"
@@ -163,8 +163,8 @@ export default function App() {
             id="sol"
             onClick={onClickNote}
             className={`${
-              isPress?.sol && "bg-slate-300"
-            } h-full bg-slate-50 border-black border-2 rounded-b-xl`}
+              isPress?.sol ? "bg-slate-300" : "bg-slate-50"
+            } h-full border-black border-2 rounded-b-xl`}
           />
           <div
             id="sol_s"
@@ -179,8 +179,8 @@ export default function App() {
             id="la"
             onClick={onClickNote}
             className={`${
-              isPress?.la && "bg-slate-300"
-            } h-full bg-slate-50 border-black border-2 rounded-b-xl`}
+              isPress?.la ? "bg-slate-300" : "bg-slate-50"
+            } h-full border-black border-2 rounded-b-xl`}
           />
           <div
             id="la_s"
@@ -195,8 +195,8 @@ export default function App() {
             id="si"
             onClick={onClickNote}
             className={`${
-              isPress?.si && "bg-slate-300"
-            } h-full bg-slate-50 border-black border-2 rounded-b-xl`}
+              isPress?.si ? "bg-slate-300" : "bg-slate-50"
+            } h-full border-black border-2 rounded-b-xl`}
           />
         </div>
         <div className="relative w-1/12 h-full">
@@ -204,8 +204,8 @@ export default function App() {
             id="do_h"
             onClick={onClickNote}
             className={`${
-              isPress?.do_h && "bg-slate-300"
-            } h-full bg-slate-50 border-black border-2 rounded-b-xl`}
+              isPress?.do_h ? "bg-slate-300" : "bg-slate-50"
+            } h-full border-black border-2 rounded-b-xl`}
           />
         </div>
       </div>
