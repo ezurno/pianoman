@@ -33,7 +33,7 @@ export default function Info() {
           <div className="text-right px-4">
             <h2>Create by @ezurno</h2>
             <div>
-              <p>v1.0.0</p>
+              <p>v1.1.0</p>
             </div>
           </div>
         </div>

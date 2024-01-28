@@ -1,10 +1,17 @@
 import { useEffect, useState } from "react";
 import { FaGithub } from "react-icons/fa";
 import { IoIosSettings, IoMdInformationCircle } from "react-icons/io";
-import { useInfoStore, useSettingStore } from "./utils/store";
+import {
+  useInfoStore,
+  useRecordStore,
+  useSettingStore,
+  useVolumeStore,
+} from "./utils/store";
 import Settings from "./components/Settings";
 import Info from "./components/Info";
 import { findValue } from "./utils/findValue";
+import Volume from "./components/Volume";
+import Record from "./components/Record";
 
 export interface IPianoProps {
   do: boolean;
@@ -50,11 +57,21 @@ export default function App() {
     setIsInfoTab: state.setIsInfoTab,
   }));
 
+  const { isVolume } = useVolumeStore((state) => ({
+    isVolume: state.isVolume,
+  }));
+
+  const { isList, setIsList } = useRecordStore((state) => ({
+    isList: state.isList,
+    setIsList: state.setIsList,
+  }));
+
   const onClickNote = (event: React.MouseEvent<HTMLDivElement>) => {
     const audio =
       import.meta.env.MODE === "production"
         ? new Audio(`/pianoman/piano/FX_piano_${event.currentTarget.id}.mp3`)
         : new Audio(`public/piano/FX_piano_${event.currentTarget.id}.mp3`);
+    audio.volume = isVolume / 100;
     audio.play();
   };
 
@@ -67,6 +84,7 @@ export default function App() {
       import.meta.env.MODE === "production"
         ? new Audio(`/pianoman/piano/FX_piano_${id}.mp3`)
         : new Audio(`public/piano/FX_piano_${id}.mp3`);
+    audio.volume = isVolume / 100;
     audio.play();
   };
 
@@ -88,6 +106,7 @@ export default function App() {
     const note = findValue(keyNoteMap, event.key.toLowerCase());
     if (note) {
       onPressNote(note);
+      setIsList(note);
     }
   };
 
@@ -99,15 +118,21 @@ export default function App() {
       window.removeEventListener("keydown", handleKeyPress);
       window.removeEventListener("keyup", handleKeyUp);
     };
-  }, [isTab]);
+  }, [isTab, isVolume]);
 
   return (
-    <div className="font-shadows h-lvh flex flex-col justify-around items-center z-10 relative">
+    <div className="font-shadows h-lvh flex flex-col justify-around items-center z-10 relative min-h-[36rem]">
       {isTab && <Settings />}
       {isInfoTab && <Info />}
+
       <h1 className="font-bold text-5xl">PIANO MAN</h1>
-      <div className="h-72 bg-black rounded-3xl py-8 w-3/5 flex flex-row justify-center relative">
-        <div className="absolute flex flex-row gap-4 -top-10 right-8 text-2xl">
+      <img src="/pianoman/image-pianoman.png" className="h-16" />
+      <Record />
+
+      <div className="h-72 bg-black rounded-3xl py-8 sm:w-3/5 w-full flex flex-row justify-center relative">
+        <Volume />
+
+        <div className="absolute flex flex-row gap-4 -bottom-10 right-8 text-2xl">
           <IoMdInformationCircle
             onClick={setIsInfoTab}
             className="hover:cursor-pointer"
@@ -226,7 +251,7 @@ export default function App() {
         </div>
       </div>
       <div className="text-slate-700 flex flex-col justify-center items-center gap-4">
-        <p>2024 create by @ezurno v1.0.0</p>
+        <p>2024 create by @ezurno v1.1.0</p>
         <a href="https://github.com/ezurno/pianoman">
           <FaGithub className="hover:text-slate-400 cursor-pointer duration-300" />
         </a>

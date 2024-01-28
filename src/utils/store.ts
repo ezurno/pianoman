@@ -49,3 +49,34 @@ export const useInfoStore = create<IInfoProps>((set) => ({
     set((state) => ({ isInfoTab: !state.isInfoTab }));
   },
 }));
+
+interface IVolumeProps {
+  isVolume: number;
+  setIsVolume: (volume: number) => void;
+}
+
+export const useVolumeStore = create<IVolumeProps>((set) => ({
+  isVolume: 70,
+  setIsVolume: (volume) => {
+    set((_) => ({ isVolume: volume }));
+  },
+}));
+
+interface IRecordProps {
+  isList: string[];
+  setIsList: (value: string) => void;
+}
+
+export const useRecordStore = create<IRecordProps>((set) => ({
+  isList: [],
+  setIsList: (value: string) => {
+    set((state) => {
+      let updatedList = [...state.isList, value];
+      if (8 < updatedList.length) {
+        // 최대 10개 항목만 유지
+        updatedList = updatedList.slice(-8);
+      }
+      return { isList: updatedList };
+    });
+  },
+}));
